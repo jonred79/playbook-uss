@@ -1,0 +1,17 @@
+---
+- name: Modulo de Instalación de Erratas Full
+  hosts: all
+  gather_facts: False
+  become: true
+  tasks:
+
+  - name: Instalacion de Erratas Full 
+    ansible.builtin.yum:
+      name: '*' 
+      state: latest
+      update_cache: yes
+
+  - name: Reboot Instalar erratas updated
+      reboot:
+         reboot_timeout: 460055
+

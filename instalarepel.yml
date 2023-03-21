@@ -1,0 +1,11 @@
+---
+- name: Modulo de Instalación de Erratas de Seguridad
+  hosts: 192.168.210.32
+  gather_facts: False
+  become: true
+  tasks:
+    - name:  Remote RPM install with yum
+      yum:
+       name: http://dl.fedoraproject.org/pub/epel/epel-release-latest-8.noarch.rpm
+       state: present 
+

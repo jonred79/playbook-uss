@@ -1,0 +1,11 @@
+---
+- name: Modulo de Instalación Agente
+  hosts: uss
+  gather_facts: False
+  become: true
+  tasks:
+  - name: Instalacion Agente Amazon
+    ansible.builtin.yum:
+      name: https://s3.amazonaws.com/ec2-downloads-windows/SSMAgent/latest/linux_amd64/amazon-ssm-agent.rpm
+      state: present
+      update_cache: True

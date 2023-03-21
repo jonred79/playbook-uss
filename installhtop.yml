@@ -1,0 +1,9 @@
+- hosts: granja 
+
+  tasks:
+  - name: Install package HTop
+    yum:
+      name:  htop 
+      state: present
+      update_cache: True
+

@@ -1,0 +1,31 @@
+- name: Modulo de Erratas de Seguridad
+  hosts: parches
+  gather_facts: False
+  become: true
+  tasks:
+     - name: Instalacion de Erratas Criticas
+       shell:
+         cmd: yum update -y --sec-severity Critical
+ # && yum update -y --sec-severity Important
+         warn: false
+     - name: Instalacion de Erratas Importantes
+       shell:
+         cmd: yum update -y --sec-severity Important
+         warn: false
+
+
+
+#yum update-minimal --security -y
+#        warn: false
+#     - name: Informacion de Erratas Antes
+#       shell:
+#         cmd: yum updateinfo
+#         warn: false
+#       register: result
+#     - name: ver lista
+#       debug:
+#         msg: "{{ result.stdout_lines }}"
+#
+#    - name: Reboot when packages were updated
+#      reboot:
+#        reboot_timeout: 56000

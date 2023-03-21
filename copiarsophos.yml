@@ -1,0 +1,59 @@
+---
+- name: Modulo Copiar y Ejecutar  Script Remoto
+  hosts: parches 
+  become: true
+  tasks:
+  #- name: Copiando Script de Antivirus Sophos
+  #  ansible.builtin.copy:
+  #    src: /Proyectoon/SophosSetup.sh
+  #    dest: /tmp/SophosSetup.sh
+  #    owner: root
+  #    group: root
+  #    mode: '0777'
+
+  #- name: Ejecutando Script Sophos
+  #  become: yes
+  #  shell: sh SophosSetup.sh
+  #    #"./prueba.sh"
+  #  args:
+  #    chdir: /tmp/
+
+ # - name: Activar Repositorio EPEL en RHEL 8
+ #   yum:
+       #name: oracle-epel-release-el8.x86_64
+ #      name: epel-release.noarch
+      # name: epel-release.noarch  
+ #      state: latest
+ #      update_cache: True
+
+  - name: Instalando Paquetes Linux
+    dnf:
+       name:
+   #      - htop
+    #     - iftop
+         - net-snmp.x86_64
+         - net-snmp-utils.x86_64
+       state: present
+       update_cache: True
+
+  - name: Copiando Archivo SNMPD.CONF
+    ansible.builtin.copy:
+      src: /Proyectoon/snmpd.conf
+      dest: /etc/snmp/snmpd.conf
+      owner: root
+      group: root
+      mode: '0755'
+
+  - name: Activando Servicio SNMPD / Reseteando Servicio SNMPD
+    ansible.builtin.service:
+      name: snmpd
+      enabled: yes
+      state: restarted
+
+  - name: Habilitando Puertos SNMPD en Firewall
+    ansible.posix.firewalld:
+      zone: public
+      port: 161-162/udp
+      permanent: yes
+      state: enabled
+      immediate: yes

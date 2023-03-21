@@ -1,0 +1,27 @@
+---
+- name: Modulo Copiar y Ejecutar  Script Remoto
+  hosts: localhost
+  become: true
+  tasks:
+  - name: Activar Repositorio EPEL en RHEL 8
+    yum:
+       name: https://dl.fedoraproject.org/pub/epel/epel-release-latest-8.noarch.rpm
+       state: latest
+       update_cache: True
+
+  - name: Instalando Paquetes Linux
+    yum:
+       name:
+         - htop
+         - iftop
+       state: present
+       update_cache: True
+
+  - name: Habilitando Puertos  en Firewall
+    ansible.posix.firewalld:
+      zone: public
+      port: 443-80/tcp
+      permanent: yes
+      state: enabled
+      immediate: yes
+

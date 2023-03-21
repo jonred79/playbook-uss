@@ -1,0 +1,15 @@
+- hosts: localhost 
+
+  tasks:
+  - name: Install package HTop
+    yum:
+      security: yes
+      state: latest
+    check_mode: yes
+    register: yum_output
+    become: true
+
+  - name: show that
+    debug:
+      var: yum_output
+

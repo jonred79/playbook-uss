@@ -1,0 +1,7 @@
+- hosts: granja
+  tasks:
+    - name: Enable EPEL Repository on Rhel 8
+      dnf:
+        name: oracle-epel-release-el8.x86_64 
+        state: latest
+      

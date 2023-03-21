@@ -1,0 +1,29 @@
+---
+- name:  Parche Para "NO" cambio de Hora
+  hosts:  all
+  become: true
+  tasks:
+   
+  - name: Crear directorio Tzdata
+    file:
+      path: /tmp/tzdatadum
+      state: directory
+      owner: root
+      group: root
+      mode: '0755'
+
+  - name: Bajar Parche Desde Internet
+    ansible.builtin.get_url:
+       url: https://data.iana.org/time-zones/releases/tzdata2022b.tar.gz
+       dest: /tmp/tzdatadum
+
+  - name: Ejecutar Parche TZdata
+    shell:
+      cmd: tar -xvzf tzdata2022b.tar.gz 
+    args:
+      warn: false
+      chdir: /tmp/tzdatadum/
+  - name: Ejecutar Zdump
+    shell:
+      cmd: zic /tmp/tzdatadum/southamerica
+

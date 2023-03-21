@@ -1,0 +1,12 @@
+---
+- name: Modulo de Instalación Agente
+  hosts: Redhat8 
+  gather_facts: False
+  become: true
+  tasks:
+  - name: Instalacion Agente Amazon
+    ansible.builtin.yum:
+      name:  http://192.168.210.44/pub/tzdata-2022c-1.el8.noarch.rpm
+      state: latest
+      disable_gpg_check: yes
+      update_cache: True

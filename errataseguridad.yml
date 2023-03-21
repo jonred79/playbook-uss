@@ -1,0 +1,17 @@
+---
+- name: Modulo de Instalación de Erratas de Seguridad
+  hosts: localhost
+  gather_facts: False 
+  become: true
+  tasks:
+    - name: Instalando Erratas de Seguridad
+      yum:
+       name: '*'
+       security: yes
+       bugfix: no
+       state: latest
+       update_cache: yes
+
+#    - name: Reboot Instalar erratas updated
+#      reboot:
+#        reboot_timeout: 460055
